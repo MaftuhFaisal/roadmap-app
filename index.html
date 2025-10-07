@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap Kegiatan Panitia Perancang UU</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <h1>Roadmap Kegiatan Panitia Perancang UU</h1>
+  <button id="btn-show-login" class="btn" style="position:absolute;right:1rem;top:1rem;background:#1a73e8;color:#fff;z-index:10;">Login</button>
+  <button id="btn-logout" class="btn" style="position:absolute;right:6rem;top:1rem;background:#dc3545;color:#fff;z-index:10;display:none;">Logout</button>
+</header>
+<!-- LOGIN MODAL -->
+<div id="login-modal" class="modal" aria-hidden="false" style="display:none;">
+  <div class="modal-content" style="position:relative;">
+    <button id="login-close" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.5rem;line-height:1;cursor:pointer;color:#888;" aria-label="Tutup">&times;</button>
+    <h3>Login Admin</h3>
+    <label>Username</label>
+    <input type="text" id="login-user" autocomplete="username" />
+    <label>Password</label>
+    <input type="password" id="login-pass" autocomplete="current-password" />
+    <div class="actions">
+      <button id="btn-login" class="btn" style="margin-top:1rem;width:100%;">Login</button>
+    </div>
+    <div id="login-error" style="color:#dc3545;margin-top:.5rem;display:none;">Username/password salah</div>
+  </div>
+</div>
+<div class="controls">
+  <div class="group">
+    <label for="tahun-sidang">Tahun Sidang:</label>
+    <select id="tahun-sidang"></select>
+    <button class="add-tahun-btn" id="btn-add-tahun" style="display:none;">+ Tambah Tahun Sidang</button>
+    <label for="masa-sidang">Masa Sidang:</label>
+    <select id="masa-sidang"></select>
+    <button class="add-masa-btn" id="btn-add-masa" style="display:none;">+ Tambah Masa Sidang</button>
+  </div>
+  <div class="group">
+    <label for="filter">Status:</label>
+    <select id="filter">
+      <option value="all">Semua</option>
+      <option value="proses">On Process</option>
+      <option value="selesai">Selesai</option>
+      <option value="akan">Yang Akan Datang</option>
+      <option value="libur">Libur</option>
+      <option value="terminated">Terminated</option>
+    </select>
+    <input id="search" type="text" placeholder="Cari kegiatan..." />
+    <button class="add-btn" id="btn-add" style="display:none;">+ Tambah Kegiatan</button>
+    <button class="btn" id="btn-logout" style="display:none;background:#dc3545;color:#fff;">Logout</button>
+  </div>
+</div>
+<div class="legend" style="max-width:1000px;margin:0 auto .5rem;padding:0 1rem;">
+  <span><i class="dot selesai" style="background:var(--success)"></i> Selesai</span>
+  <span><i class="dot proses" style="background:var(--warn)"></i> On Process</span>
+  <span><i class="dot akan" style="background:var(--info)"></i> Yang Akan Datang</span>
+  <span><i class="dot libur" style="background:var(--muted)"></i> Libur</span>
+  <span><i class="dot terminated" style="background:var(--danger)"></i> Terminated</span>
+</div>
+<div class="masa-header" id="masa-title"></div>
+<div class="timeline" id="timeline"></div>
+<!-- Modal Tambah/Edit -->
+<div id="modal" class="modal" aria-hidden="true">
+  <div class="modal-content">
+    <h3 id="modal-title">Tambah Kegiatan</h3>
+    <label>Tanggal (contoh: Rabu, 13 Agustus 2025 / 27-29 Agustus 2025 / 2 Oktober – 21 Oktober 2025)</label>
+    <input type="text" id="event-date" placeholder="Rabu, 13 Agustus 2025" />
+    <label>Jenis Rapat / Kegiatan</label>
+    <input type="text" id="event-type" placeholder="Jenis rapat" />
+    <label>Deskripsi</label>
+    <textarea id="event-desc" rows="3" placeholder="Uraian singkat"></textarea>
+    <label>Status</label>
+    <select id="event-status">
+      <option value="auto">Auto (disesuaikan tanggal)</option>
+      <option value="proses">On Process</option>
+      <option value="selesai">Selesai</option>
+      <option value="akan">Yang Akan Datang</option>
+      <option value="libur">Libur</option>
+      <option value="terminated">Terminated</option>
+    </select>
+    <label>Bukti (opsional, gambar)</label>
+    <input type="file" id="event-proof" accept=".jpg,.jpeg,.png,.webp" />
+    <label>Notulen (opsional, PDF/DOC/DOCX)</label>
+    <input type="file" id="event-notulen" accept=".pdf,.doc,.docx" />
+    <label>Hasil Rapat (opsional, PDF/DOC/DOCX)</label>
+    <input type="file" id="event-hasilrapat" accept=".pdf,.doc,.docx" />
+    <label>Link Dokumentasi (opsional, Google Drive)</label>
+    <input type="url" id="event-doclink" placeholder="https://drive.google.com/..." />
+    <div class="actions">
+      <button class="btn ghost" id="btn-cancel">Batal</button>
+      <button class="btn primary" id="btn-save">Simpan</button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
