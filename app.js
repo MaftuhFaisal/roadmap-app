@@ -1,6 +1,7 @@
 (function(){
   const SHEETDB_API = 'https://sheetdb.io/api/v1/5spb590qt55j0';
   const $ = (id)=>document.getElementById(id);
+  console.log('✅ app.js berhasil dijalankan');
 
   // --- LOGIN LOGIC ---
   const ADMIN_USER = "admin";
@@ -227,3 +228,4 @@
   // Load data dari Google Sheet saat halaman dibuka
   document.addEventListener('DOMContentLoaded', loadEventsFromSheet);
 })();
+
