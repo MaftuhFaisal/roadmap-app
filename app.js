@@ -217,9 +217,10 @@
   $('btn-save').onclick = handleSave;
   $('btn-cancel').onclick = closeModal;
   modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
-
+  btnAdd.onclick = openAdd;
   function debounce(fn,ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn.apply(this,a),ms);} }
 
   // Load data dari Google Sheet saat halaman dibuka
   document.addEventListener('DOMContentLoaded', loadEventsFromSheet);
 })();
+
