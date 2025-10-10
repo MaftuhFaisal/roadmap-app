@@ -1,5 +1,5 @@
 (function(){
-  const SHEETDB_API = 'https://sheetdb.io/api/v1/5spb590qt55j0'; // Ganti dengan endpoint SheetDB kamu
+  const SHEETDB_API = 'https://sheetdb.io/api/v1/5spb590qt55j0';
   const $ = (id)=>document.getElementById(id);
 
   // --- LOGIN LOGIC ---
@@ -56,7 +56,7 @@
   // --- END LOGIN LOGIC ---
 
   // State
-  let roadmap = {}; // akan diisi dari Google Sheet
+  let roadmap = {};
   let tahunSidangs = [];
   let currentTahun = '';
   let masaSidangs = [];
@@ -193,7 +193,6 @@
     const doclink = iDocLink.value.trim();
     const status = iStatus.value;
     if(!date || !type || !desc){ alert('Semua field wajib diisi.'); return; }
-    // Tambahkan tahun dan masa agar bisa dikelompokkan di Sheet
     const eventObj = {
       tahun: currentTahun,
       masa: currentMasa,
@@ -217,10 +216,14 @@
   $('btn-save').onclick = handleSave;
   $('btn-cancel').onclick = closeModal;
   modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
+
+  // 🔧 Tombol yang sebelumnya tidak aktif
   btnAdd.onclick = openAdd;
+  btnAddTahun.onclick = () => alert('Fitur Tambah Tahun Sidang belum diaktifkan.');
+  btnAddMasa.onclick = () => alert('Fitur Tambah Masa Sidang belum diaktifkan.');
+
   function debounce(fn,ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn.apply(this,a),ms);} }
 
   // Load data dari Google Sheet saat halaman dibuka
   document.addEventListener('DOMContentLoaded', loadEventsFromSheet);
 })();
-
