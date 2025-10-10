@@ -1,6 +1,15 @@
 (function(){
   const SHEETDB_API = 'https://sheetdb.io/api/v1/5spb590qt55j0';
   const $ = (id)=>document.getElementById(id);
+  // tambahkan di bagian atas file app.js (setelah baris const $ = ...)
+  function debounce(fn, ms) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+
   console.log('✅ app.js berhasil dijalankan');
 
   // --- LOGIN LOGIC ---
@@ -140,9 +149,13 @@
     masaSelect.value = currentMasa;
   }
   function render(){
-    timeline.innerHTML = '';
-    masaTitle.textContent = 'Tahun Sidang ' + currentTahun + ' - Masa Sidang ' + currentMasa;
-    const list = (roadmap[currentTahun][currentMasa]||[])
+      timeline.innerHTML = '';
+      if (!roadmap[currentTahun] || !roadmap[currentTahun][currentMasa]) {
+        masaTitle.textContent = 'Belum ada data Tahun Sidang atau Masa Sidang.';
+        return;
+      }
+      masaTitle.textContent = 'Tahun Sidang ' + currentTahun + ' - Masa Sidang ' + currentMasa;
+      const list = (roadmap[currentTahun][currentMasa]||[])
       .map((ev, idx)=>({ ...ev, _idx: idx }))
       .filter(ev=>{
         const q = (searchInput.value||'').toLowerCase();
@@ -259,6 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadEventsFromSheet();
 });
 })();
+
 
 
 
