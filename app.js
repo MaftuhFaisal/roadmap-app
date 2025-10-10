@@ -149,41 +149,42 @@
     masaSelect.value = currentMasa;
   }
   function render(){
-      timeline.innerHTML = '';
-      if (!roadmap[currentTahun] || !roadmap[currentTahun][currentMasa]) {
-        masaTitle.textContent = 'Belum ada data Tahun Sidang atau Masa Sidang.';
-        return;
-      }
-      masaTitle.textContent = 'Tahun Sidang ' + currentTahun + ' - Masa Sidang ' + currentMasa;
-      const list = (roadmap[currentTahun][currentMasa]||[])
-      .map((ev, idx)=>({ ...ev, _idx: idx }))
-      .filter(ev=>{
-        const q = (searchInput.value||'').toLowerCase();
-        return (!q) || (ev.type && ev.type.toLowerCase().includes(q)) || (ev.desc && ev.desc.toLowerCase().includes(q)) || (ev.date && ev.date.toLowerCase().includes(q));
-      });
-    if(list.length===0){
-      const empty = document.createElement('div');
-      empty.style.textAlign='center';
-      empty.style.padding='1rem';
-      empty.textContent = 'Tidak ada kegiatan untuk filter/pencarian ini.';
-      timeline.appendChild(empty);
-      return;
-    }
-    list.forEach((ev, i)=>{
-      const card = document.createElement('div');
-      card.className = `event`;
-      card.innerHTML = `
-        <div class="date">${ev.date}</div>
-        <div class="type">${ev.type||''}</div>
-        <div class="desc">${ev.desc||''}</div>
-        ${isAdmin ? `<button class="edit-btn" data-idx="${ev._idx}">Edit</button>` : ''}
-      `;
-      if(isAdmin && card.querySelector('.edit-btn'))
-        card.querySelector('.edit-btn').onclick = ()=>openEdit(ev._idx);
-      timeline.appendChild(card);
+  timeline.innerHTML = '';
+  if (!roadmap[currentTahun] || !roadmap[currentTahun][currentMasa]) {
+    masaTitle.textContent = 'Belum ada data Tahun Sidang atau Masa Sidang.';
+    return;
+  }
+  masaTitle.textContent = 'Tahun Sidang ' + currentTahun + ' - Masa Sidang ' + currentMasa;
+  const list = (roadmap[currentTahun][currentMasa]||[])
+    .map((ev, idx)=>({ ...ev, _idx: idx }))
+    .filter(ev=>{
+      const q = (searchInput.value||'').toLowerCase();
+      return (!q) || (ev.type && ev.type.toLowerCase().includes(q)) ||
+             (ev.desc && ev.desc.toLowerCase().includes(q)) ||
+             (ev.date && ev.date.toLowerCase().includes(q));
+    });
+  if(list.length===0){
+    const empty = document.createElement('div');
+    empty.style.textAlign='center';
+    empty.style.padding='1rem';
+    empty.textContent = 'Tidak ada kegiatan untuk filter/pencarian ini.';
+    timeline.appendChild(empty);
+    return;
+  }
+  list.forEach((ev, i)=>{
+    const card = document.createElement('div');
+    card.className = `event`;
+    card.innerHTML = `
+      <div class="date">${ev.date}</div>
+      <div class="type">${ev.type||''}</div>
+      <div class="desc">${ev.desc||''}</div>
+      ${isAdmin ? `<button class="edit-btn" data-idx="${ev._idx}">Edit</button>` : ''}
+    `;
+    if(isAdmin && card.querySelector('.edit-btn'))
+      card.querySelector('.edit-btn').onclick = ()=>openEdit(ev._idx);
+    timeline.appendChild(card);
     });
   }
-
   function openAdd(){
     editIndex = null;
     modalTitle.textContent = 'Tambah Kegiatan';
@@ -272,6 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadEventsFromSheet();
 });
 })();
+
 
 
 
