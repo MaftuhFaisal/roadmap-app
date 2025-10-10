@@ -220,12 +220,42 @@
 
   // 🔧 Tombol yang sebelumnya tidak aktif
   btnAdd.onclick = openAdd;
-  btnAddTahun.onclick = () => alert('Fitur Tambah Tahun Sidang belum diaktifkan.');
-  btnAddMasa.onclick = () => alert('Fitur Tambah Masa Sidang belum diaktifkan.');
 
+// Tambah Tahun Sidang (masih placeholder)
+btnAddTahun.onclick = () => {
+  const tahunBaru = prompt("Masukkan Tahun Sidang baru (contoh: 2026-2027):");
+  if (!tahunBaru) return;
+  if (roadmap[tahunBaru]) {
+    alert("Tahun Sidang ini sudah ada!");
+    return;
+  }
+  roadmap[tahunBaru] = { "I": [] };
+  currentTahun = tahunBaru;
+  currentMasa = "I";
+  renderTahunOptions();
+  renderMasaOptions();
+  render();
+  alert("Tahun Sidang baru berhasil ditambahkan!");
+};
+
+// Tambah Masa Sidang
+btnAddMasa.onclick = () => {
+  const masaBaru = prompt("Masukkan Masa Sidang baru (contoh: II, III, IV):");
+  if (!masaBaru) return;
+  if (roadmap[currentTahun][masaBaru]) {
+    alert("Masa Sidang ini sudah ada!");
+    return;
+  }
+  roadmap[currentTahun][masaBaru] = [];
+  currentMasa = masaBaru;
+  renderMasaOptions();
+  render();
+  alert("Masa Sidang baru berhasil ditambahkan!");
+};
   function debounce(fn,ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn.apply(this,a),ms);} }
 
   // Load data dari Google Sheet saat halaman dibuka
   document.addEventListener('DOMContentLoaded', loadEventsFromSheet);
 })();
+
 
